@@ -2,13 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\DownloadDefaultBranch;
 use App\Actions\DownloadTags;
 use App\Models\Repository;
-use App\Resources\Github\Tag;
-use App\Services\GithubService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 
 class BackupTags extends Command
 {
@@ -35,6 +31,6 @@ class BackupTags extends Command
 
         $action = app(DownloadTags::class);
 
-        $repositories->each(fn(Repository $repository) => $action->handle($repository));
+        $repositories->each(fn (Repository $repository) => $action->handle($repository));
     }
 }

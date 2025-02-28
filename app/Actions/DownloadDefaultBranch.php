@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Models\Repository;
-use App\Resources\Github\Tag;
 use App\Services\GithubService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
@@ -12,16 +11,11 @@ use SplFileInfo;
 
 class DownloadDefaultBranch
 {
-    /**
-     * @param \App\Services\GithubService $service
-     */
     public function __construct(
         protected GithubService $service
     ) {}
 
     /**
-     * @param \App\Models\Repository $repository
-     *
      * @return void
      */
     public function handle(Repository $repository)
@@ -30,27 +24,20 @@ class DownloadDefaultBranch
         $this->cleanup($repository);
     }
 
-    /**
-     * @param \App\Models\Repository $repository
-     *
-     * @return string
-     */
     protected function path(Repository $repository): string
     {
-        return config('gbackup.backup_path') . "{$repository->username}/{$repository->repo}/{$repository->default_branch}";
+        return config('gbackup.backup_path')."{$repository->username}/{$repository->repo}/{$repository->default_branch}";
     }
 
     /**
-     * @param \App\Models\Repository $repository
-     * @param App\Resources\Github\Tag $tag
-     *
+     * @param  App\Resources\Github\Tag  $tag
      * @return void
      */
     protected function download(Repository $repository)
     {
         $path = $this->path($repository);
 
-        if (File::missing($path) ) {
+        if (File::missing($path)) {
             File::makeDirectory(path: $path, recursive: true, force: true);
         }
 
@@ -62,8 +49,8 @@ class DownloadDefaultBranch
     {
         collect(File::allFiles($this->path($repository)))->filter(function (SplFileInfo $file) use ($repository) {
             return Str::startsWith($file->getFilename(), $repository->default_branch);
-        })->sortByDesc(fn(SplFileInfo $file) => $file->getFilename())
-        ->slice($repository->number_of_backups)
-        ->each(fn(SplFileInfo $file) => File::delete($file->getPathname()));
+        })->sortByDesc(fn (SplFileInfo $file) => $file->getFilename())
+            ->slice($repository->number_of_backups)
+            ->each(fn (SplFileInfo $file) => File::delete($file->getPathname()));
     }
 }

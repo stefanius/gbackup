@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Exceptions\InvalidUrlException;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Repository extends Model
 {
@@ -25,10 +24,6 @@ class Repository extends Model
 
     /**
      * Create a repository from url.
-     *
-     * @param string $url
-     *
-     * @return self
      */
     public static function fromUrl(string $url, $defaultBranch = 'main'): self
     {
@@ -55,13 +50,13 @@ class Repository extends Model
                 'number_of_backups' => 12,
             ];
         } else {
-            throw new InvalidUrlException();
+            throw new InvalidUrlException;
         }
 
         return Repository::create($data);
     }
 
-    public function defaultBranchDownloadUrl():string
+    public function defaultBranchDownloadUrl(): string
     {
         return "https://github.com/{$this->username}/{$this->repo}/zipball/{$this->default_branch}";
     }

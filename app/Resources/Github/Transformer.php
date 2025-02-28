@@ -4,6 +4,7 @@ namespace App\Resources\Github;
 
 use App\Resources\Github\Traits\TransformTags;
 
-class Transformer {
+class Transformer
+{
     use TransformTags;
 }

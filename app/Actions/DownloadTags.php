@@ -9,16 +9,11 @@ use Illuminate\Support\Facades\File;
 
 class DownloadTags
 {
-    /**
-     * @param \App\Services\GithubService $service
-     */
     public function __construct(
         protected GithubService $service
     ) {}
 
     /**
-     * @param \App\Models\Repository $repository
-     *
      * @return void
      */
     public function handle(Repository $repository)
@@ -30,27 +25,20 @@ class DownloadTags
         }
     }
 
-    /**
-     * @param \App\Models\Repository $repository
-     *
-     * @return string
-     */
     protected function path(Repository $repository): string
     {
-        return config('gbackup.backup_path') . "{$repository->username}/{$repository->repo}/tags";
+        return config('gbackup.backup_path')."{$repository->username}/{$repository->repo}/tags";
     }
 
     /**
-     * @param \App\Models\Repository $repository
-     * @param App\Resources\Github\Tag $tag
-     *
+     * @param  App\Resources\Github\Tag  $tag
      * @return void
      */
     protected function download(Repository $repository, Tag $tag)
     {
         $path = $this->path($repository);
 
-        if (File::missing($path) ) {
+        if (File::missing($path)) {
             File::makeDirectory(path: $path, recursive: true, force: true);
         }
 

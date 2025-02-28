@@ -13,7 +13,7 @@ class RepositoryTest extends TestCase
     public function it_can_create_a_repository_from_url_from_https_protocol(): void
     {
         // Given
-        $url = "https://github.com/stefanius/gbackup.git";
+        $url = 'https://github.com/stefanius/gbackup.git';
 
         // When
         $repository = Repository::fromUrl($url);
@@ -40,7 +40,7 @@ class RepositoryTest extends TestCase
     public function it_can_create_a_repository_from_url_from_ssh_protocol(): void
     {
         // Given
-        $url = "git@github.com:stefanius/gbackup.git";
+        $url = 'git@github.com:stefanius/gbackup.git';
 
         // When
         $repository = Repository::fromUrl($url);
@@ -68,7 +68,7 @@ class RepositoryTest extends TestCase
     {
         $this->expectException(InvalidUrlException::class);
         // Given
-        $url = "invalid";
+        $url = 'invalid';
 
         // When
         Repository::fromUrl($url);

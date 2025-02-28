@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Repository;
-use App\Resources\Github\Tag;
 use App\Resources\Github\Transformer;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -41,9 +40,6 @@ class GithubService
     }
 
     /**
-     * @param string $target
-     * @param string $source
-     *
      * @return void
      */
     public function download(string $target, string $source)

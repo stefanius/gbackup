@@ -2,13 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\DownloadDefaultBranch;
-use App\Actions\DownloadTags;
 use App\Models\Repository;
-use App\Resources\Github\Tag;
-use App\Services\GithubService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 
 class AddRepository extends Command
 {
@@ -36,7 +31,7 @@ class AddRepository extends Command
 
         $repository = Repository::fromUrl($url, $defaultBranch);
 
-        $this->info("Repository created");
+        $this->info('Repository created');
 
         $this->table(['repository', 'default', 'ssh', 'https'], [["{$repository->username}/{$repository->repo}", $repository->default_branch, $repository->ssh(), $repository->https()]]);
     }

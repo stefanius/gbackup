@@ -4,9 +4,9 @@ namespace App\Resources\Github\Traits;
 
 use App\Resources\Github\Tag;
 use App\Resources\Github\Transformer;
-use Illuminate\Support\Arr;
 
-trait TransformTags {
+trait TransformTags
+{
     public static function transformTags(array $rows)
     {
         $tags = [];
